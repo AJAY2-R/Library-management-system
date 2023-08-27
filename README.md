@@ -27,7 +27,7 @@ Welcome to the Library Management System GitHub repository! This web application
 
 Here are a few screenshots showcasing the interface and functionalities of the Library Management System:
 
-![Home](/screenshots/Home.jpeg)
+![Home](/screenshots/Home.png)
 ![Books](/screenshots/Books.jpeg)
 ![Add Member](/screenshots/add member.jpeg)
 ![Add Book](/Screenshorts/Add Book.jpeg)
