@@ -1,4 +1,4 @@
-** Library management system **
+#Library management system
 Welcome to the Library Management System GitHub repository! This web application is designed to simplify the management of books, members, and transactions within a local library. With a user-friendly interface and essential features, this tool aims to enhance the overall efficiency and organization of library operations.
 
 ## Required Tools
