@@ -29,10 +29,6 @@ Here are a few screenshots showcasing the interface and functionalities of the L
 
 ![Home](/screenshots/Home.png)
 ![Books](/screenshots/Books.jpeg)
-![Add Member](/screenshots/add member.jpeg)
-![Add Book](/Screenshorts/Add Book.jpeg)
-![Import Book ](/Screenshorts/Import Book.jpeg)
-![Issue Book](/Screenshorts/Issue Book.jpeg)
 ![Return Book](/screenshots/returnbook.jpeg)
 ![Transactions](/screenshots/Transactions.jpeg)
 
