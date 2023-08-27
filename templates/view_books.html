@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+  <div class="overflow-x-auto rounded-lg shadow w-full">
+    <div class="container mx-auto py-8">
+        <center><h1 class="text-2xl font-semibold mb-4">Book List</h1>
+
+         <form class="mb-4" method="post">
+            <input type="text" name="searcht" class="px-2 py-1 border border-gray-300 rounded" placeholder="Search by Title">
+            <input type="text" name="searcha" class="px-2 py-1 border border-gray-300 rounded" placeholder="Search by Author">
+            <button type="submit" class="ml-2 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">Search</button>
+        </form></center>
+        <table class="w-full bg-white border border-gray-200 border-collapse">
+          <thead>
+              <tr class="bg-gray-100">
+                  <th class="py-2 px-4 text-left border border-gray-200">Book Id</th>
+                  <th class="py-2 px-4 text-left border border-gray-200">Title</th>
+                  <th class="py-2 px-4 text-left border border-gray-200">Author</th>
+                  <th class="py-2 px-4 text-left border border-gray-200">ISBN</th>
+                  <th class="py-2 px-4 text-left border border-gray-200">Publisher</th>
+                  <th class="py-2 px-4 text-left border border-gray-200">Stock</th>
+                  <th class="py-2 px-4 text-left border border-gray-200">Action</th>
+
+              </tr>
+          </thead>
+          <tbody>
+              {% for book, stock in books %}
+              <tr class="{{ 'bg-gray-50' if loop.index is even else 'bg-white' }}">
+                      <td class="py-2 px-4 border border-gray-200" >{{book.id}}</td>
+                      <td class="py-2 px-4 border border-gray-200" ><a href="/view_book/{{book.id}}" class="text-blue" title="Show More details">{{ book.title }}</a></td>
+                      <td class="py-2 px-4 border border-gray-200">{{ book.author }}</td>
+                      <td class="py-2 px-4 border border-gray-200">{{ book.isbn }}</td>
+                      <td class="py-2 px-4 border border-gray-200">{{ book.publisher }}</td>
+                      <td class="py-2 px-4 border border-gray-200">
+                          Total: {{ stock.total_quantity }}, Available: {{ stock.available_quanity }}
+                      </td>
+                      <td class="py-2 px-4 border border-gray-200"><a class="ml-2 px-4 py-1 bg-green-500 text-white rounded hover:bg-green-600" href="edit_book/{{book.id}}">Edit </a>
+                        <a class="ml-2 px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600" href="delete_book/{{book.id}}" onclick="return confirm('Are you sure')">Delete </a></td>
+                  </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+      
+    </div>
+</div>
+
+{% endblock %}

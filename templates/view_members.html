@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+  <div class="overflow-x-auto rounded-lg shadow w-full">
+    <div class="container mx-auto py-8">
+        <center><h1 class="text-2xl font-semibold mb-4">Member List</h1>
+
+         <form class="mb-4" method="post">
+            <input type="text" name="search" class="px-2 py-1 border border-gray-300 rounded" placeholder="Search by Name">
+            <button type="submit" class="ml-2 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">Search</button>
+        </form></center>
+        <table class="w-full bg-white border border-gray-200 border-collapse">
+          <thead>
+              <tr class="bg-gray-100">
+                  <th class="py-2 px-4 text-left border border-gray-200">Member id</th>
+                  <th class="py-2 px-4 text-left border border-gray-200">Name</th>
+                  <th class="py-2 px-4 text-left border border-gray-200">Email</th>
+                  <th class="py-2 px-4 text-left border border-gray-200">Phone</th>
+                  <th class="py-2 px-4 text-left border border-gray-200">Address</th>
+                  <th class="py-2 px-4 text-left border border-gray-200">Action</th>
+
+              </tr>
+          </thead>
+          <tbody>
+              {% for i in member %}
+              <tr class="{{ 'bg-gray-50' if loop.index is even else 'bg-white' }}">
+                      <td class="py-2 px-4 border border-gray-200">{{ i.id}}</td>
+                      <td class="py-2 px-4 border border-gray-200"><a href="/view_member/{{i.id}}" class="text-green-500" title="Show More details">{{ i.name}}</a></td>
+                      <td class="py-2 px-4 border border-gray-200">{{ i.email }}</td>
+                      <td class="py-2 px-4 border border-gray-200">{{ i.phone }}</td>
+                      <td class="py-2 px-4 border border-gray-200">{{ i.address }}</td>
+                      <td class="py-2 px-4 border border-gray-200">
+                        <a class="ml-2 px-4 py-1 bg-green-500 text-white rounded hover:bg-green-600" href="edit_member/{{i.id}}">Edit </a>
+                      <a class="ml-2 px-4 py-1 bg-red-500 text-white rounded hover:bg-red-600" href="delete_member/{{i.id}}" onclick="return confirm('Are you sure')">Delete </a></td>
+                    </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+      
+    </div>
+</div>
+
+{% endblock %}

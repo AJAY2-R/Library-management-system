@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="flex justify-center items-center  bg-gray-100">
+    <div class="bg-white p-8 rounded shadow-md w-3/4" >
+        <h1 class="text-2xl mb-4">Edit Book</h1>
+        <form method="POST" action="{{ url_for('edit_book',id=book.id) }}">
+            <label for="title" class="block mb-2">Title:</label>
+            <input type="text" name="title" class="w-full border rounded p-2 mb-2" value="{{book.title}}"><br>
+
+            <label for="author" class="block mb-2">Author:</label>
+            <input type="text" name="author" class="w-full border rounded p-2 mb-2" value="{{book.author}}"><br>
+
+            <label for="isbn" class="block mb-2">ISBN:</label>
+            <input type="text" name="isbn" class="w-full border rounded p-2 mb-2"value={{book.isbn}}><br>
+
+            <label for="publisher" class="block mb-2">Publisher:</label>
+            <input type="text" name="publisher" class="w-full border rounded p-2 mb-2"value="{{book.publisher}}"><br>
+
+            <label for="page" class="block mb-2">Page:</label>
+            <input type="text" name="page" class="w-full border rounded p-2 mb-2"value={{book.page}}><br>
+
+            <label for="stock" class="block mb-2">Stock:</label>
+            <input type="text" name="stock" class="w-full border rounded p-2 mb-2" value={{stock.total_quantity}}><br>
+
+            <button type="submit" class="bg-blue-500 text-white rounded p-2" onclick="return Confirm('Are you sure')">Confirm</button>
+        </form>
+    </div>
+</div>
+{% endblock%}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="flex justify-center items-center  bg-gray-100">
+    <div class="bg-white p-8 rounded shadow-md w-3/4" >
+        <h1 class="text-2xl mb-4">EDIT MEMBER</h1>
+        <form method="POST" action="{{ url_for('edit_member',id=member.id) }}">
+            <label for="name" class="block mb-2">Name:</label>
+            <input type="text" name="name" class="w-full border rounded p-2 mb-2" value="{{member.name}}"><br>
+
+            <label for="email" class="block mb-2">Email:</label>
+            <input type="text" name="email" class="w-full border rounded p-2 mb-2" value="{{member.email}}"><br>
+
+            <label for="phone" class="block mb-2">Phone:</label>
+            <input type="text" name="phone" class="w-full border rounded p-2 mb-2"value="{{member.phone}}"><br>
+
+            <label for="address" class="block mb-2">Address</label>
+            <input name="address" class="w-full border rounded p-2 mb-2" value="{{member.address}}" ><br>
+
+            <button type="submit" class="bg-blue-500  center text-white rounded p-2">MODIFY</button>
+        </form>
+    </div>
+</div>
+
+{% endblock%}

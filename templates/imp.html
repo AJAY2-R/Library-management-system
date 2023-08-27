@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+    <div class="container mx-auto p-4">
+        <h1 class="text-3xl font-semibold mb-4 ">Import Books </h1>
+        <form action="/import_book" method="POST"  class="mb-4">
+            <input type="text" name="title" value="{{ title }}" placeholder="Search by book title" class="p-2 border rounded">
+            <input type="number" name="num_books" placeholder="Number of books" class="p-2 border rounded">
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Search</button>
+        </form>
+        {% if data %}
+        <form id="bookForm" method="POST">
+        <table class="table-auto w-full border bg-white">
+            <thead>
+                <tr>
+                    <th class="px-4 py-2">Book ID</th>
+                    <th class="px-4 py-2">Title</th>
+                    <th class="px-4 py-2">Authors</th>
+                    <th class="px-4 py-2">ISBN</th>
+                    <th class="px-4 py-2">Publisher</th>
+                    <th class="px-4 py-2">Num Pages</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in data %}
+                <tr>
+                    <td class="border px-4 py-2">{{ book.get('bookID', '') }}</td>
+                    <td class="border px-4 py-2">{{ book.get('title', '') }}</td>
+                    <td class="border px-4 py-2">{{ book.get('authors', '') }}</td>
+                    <td class="border px-4 py-2">{{ book.get('isbn', '') }}</td>
+                    <td class="border px-4 py-2">{{ book.get('publisher', '') }}</td>
+                    <td class="border px-4 py-2">{{ book.get('  num_pages', '') }}</td>
+                    <td class="border px-4 py-2"><input type="Number" name="stock" value="0" class="p-2 border rounded" min=0></td>
+                    <td class="border px-4 py-2">
+                        <button class="bg-red-500 text-white px-2 py-1 rounded" onclick="deleteBook(this)">Delete</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+            <button type="button" class="bg-green-500 text-white px-4 py-2 rounded" onclick="saveAllBooks()">Save All Books</button>
+        </form>
+        {% endif %}
+
+</div>
+
+
+<script>
+
+    
+function deleteBook(button) {
+    const row = button.closest('tr');
+    if (row) {
+        row.remove();
+    }
+  }
+  
+  function saveAllBooks() {
+    const form = document.getElementById('bookForm');
+    const rows = form.querySelectorAll('tbody tr');
+  
+    const books = [];
+  
+    rows.forEach(row => {
+        const id= parseInt(row.cells[0].textContent,10);
+        const title = row.cells[1].textContent;
+        const authors = row.cells[2].textContent;
+        const isbn = row.cells[3].textContent;
+        const publisher = row.cells[4].textContent;
+        const numPages = parseInt(row.cells[5].textContent, 10);
+        const stock=parseInt(row.querySelector('input[name="stock"]').value,10)
+        books.push({
+            id:id,
+            title: title,
+            authors: authors,
+            isbn: isbn,
+            publisher: publisher,
+            numPages: numPages,
+            stock:stock
+        });
+    });
+  
+    fetch('/save_all_books', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(books)
+    })
+    .then(response => response.json())
+    .then(result => {
+        console.log(result);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+  }
+</script>
+
+{% endblock content %}

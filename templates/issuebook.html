@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">Issue Book</h1>
+    
+    <form method="post" class="mb-8">
+        <div class="flex space-x-4">
+            <div class="w-1/2">
+                <label for="mk" class="block text-sm font-medium text-gray-700">Search Member by ID or Name:</label>
+                <input type="text" name="mk" id="mk" class="w-full border rounded p-2 mb-2" required>
+                </div>
+            <div class="w-1/2">
+                <label for="bk" class="block text-sm font-medium text-gray-700">Search Book by BookId Or Title :</label>
+                <input type="text" name="bk" id="bk" class="w-full border rounded p-2 mb-2" required>
+            </div>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Search">
+    </form>
+    
+
+    {% if member %}
+    <div id="member-details" class="mb-4">
+        <h1 class="text-3xl font-semibold mb-4">Member Details</h1>
+        <div class="bg-white p-6 rounded shadow">
+        <h2 class="text-xl font-semibold mb-2">{{ member.name }}</h2>
+        <p class="text-gray-600">{{ member.address }}</p>
+        <p class="text-gray-600">{{ member.phone }}</p>
+        <p class="text-gray-600">{{ member.email }}</p>
+        <p class="text-gray-600">Outstanding Debt: 
+            {% if debt > 450 %}
+                <div class="alert alert-error mb-5">{{ debt}}<div>
+            {% else %}
+                <div class="alert alert-success mb-5">{{ debt}} <div>
+            {% endif %}
+        </p>
+    </div>
+    {% endif %}
+    </div>
+</div>
+    {% if book %}
+    <div id="book-details" class="mb-4">
+        <h1 class="text-3xl font-semibold mb-4">View Book Details</h1>
+        <div class="bg-white p-6 rounded shadow">
+            <h2 class="text-xl font-semibold mb-2">{{book.Book.id}} : {{ book.Book.title }}</h2>
+            <p class="text-gray-600">{{ book.Book.author }}</p>
+            <p class="text-gray-600">{{ book.Book.isbn }}</p>
+            <p class="text-gray-600">{{ book.Book.publisher }}</p>
+            <p class="text-gray-600">Page Count: {{ book.Book.page }}</p>
+        </div>
+        <div class="bg-white mt-4 p-6 rounded shadow">
+            <h2 class="text-xl font-semibold mb-2">Stock Details</h2>
+            <p class="text-gray-600">Total Quantity: {{ book.Stock.total_quantity }}</p>
+            <p class="text-gray-600">Available Quantity: {{ book.Stock.available_quantity }}</p>
+            <p class="text-gray-600">Borrowed Quantity: {{ book.Stock.borrowed_quantity }}</p>
+            <p class="text-gray-600">Total Borrowed: {{book.Stock.total_borrowed }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if member and book %}
+    <div class="mb-4">
+        <form method="post" action="{{ url_for('issue_book_confirm') }}">
+            <input type="hidden" name="bookid" value="{{book.Book.id}}">
+            <input type="hidden" name="memberid" value="{{member.id}}">
+            <center><button type="button" id="confirmButton" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2" onclick="issueBook()">Confirm</button></center>
+
+
+        </form>
+    </div>    
+    {% endif %}
+</div>
+<script>
+    function issueBook() {
+        const debt = {{ debt }}; 
+    
+        if (debt > 500) {
+            const warningElement = document.createElement('p');
+            warningElement.textContent = 'Debt is more than 500! Please review before confirming.';
+            warningElement.style.color = 'red';
+            
+            const confirmButton = document.getElementById('confirmButton');
+            confirmButton.parentElement.appendChild(warningElement);
+        } else {
+            
+            const form = document.querySelector('form[action="{{ url_for('issue_book_confirm') }}"]');
+            form.submit();
+        }
+    }
+    </script>
+    
+    
+{% endblock content %}

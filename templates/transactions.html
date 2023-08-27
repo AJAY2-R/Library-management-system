@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+  <div class="overflow-x-auto rounded-lg shadow w-full">
+    <div class="container mx-auto py-8">
+        <center><h1 class="text-2xl font-semibold mb-4">Transactions List </h1>
+
+         <form class="mb-4" method="post">
+            <input type="text" name="search" class="px-2 py-1 border border-gray-300 rounded" placeholder="Search by member name or transaction id ">
+            <button type="submit" class="ml-2 px-4 py-1 bg-blue-500 text-white rounded hover:bg-blue-600">Search</button>
+        </form></center>
+        <table class="w-full bg-white border border-gray-200 border-collapse">
+          <thead>
+              <tr class="bg-gray-100">
+                  <th class="py-2 px-4 text-left border border-gray-200">Transaction Id</th>
+                  <th class="py-2 px-4 text-left border border-gray-200">Book</th>
+                  <th class="py-2 px-4 text-left border border-gray-200">Member</th>
+                  <th class="py-2 px-4 text-left border border-gray-200">Issue Date</th>
+                  <th class="py-2 px-4 text-left border border-gray-200">Return Date</th>
+                  <th class="py-2 px-4 text-left border border-gray-200">Rent fee </th>
+                  <th class="py-2 px-4 text-left border border-gray-200">Action</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for trans,member,book in trans %}
+              <tr class="{{ 'bg-gray-50' if loop.index is even else 'bg-white' }}">
+                      <td class="py-2 px-4 border border-gray-200" >{{trans.id}}</td>
+                      <td class="py-2 px-4 border border-gray-200" ><a href="/view_book/{{book.id}}" class="text-green-500" title="Show More details">{{ book.title }}</a></td>
+                      <td class="py-2 px-4 border border-gray-200"><a href="/view_member/{{member.id}}" class="text-blue-500" title="Show More details">{{ member.name}}</td>
+                      <td class="py-2 px-4 border border-gray-200">{{ trans.issue_date.date() }}</td>
+                      <td class="py-2 px-4 border border-gray-200"> {% if trans.return_date %}{{ trans.return_date.date() }}{% else %}<p class="text-red-500">Not returned</p>{% endif %}</td>
+                      <td class="py-2 px-4 border border-gray-200">{{ trans.rent_fee  }}  ₹</td>
+                      <td class="py-2 px-4 border border-gray-200"> <a class="ml-2 px-4 py-1 bg-green-500 text-white rounded hover:bg-green-600" href ="returnbook/{{trans.id}}">Manage</a></td>
+                      </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+      
+    </div>
+</div>
+
+{% endblock %}

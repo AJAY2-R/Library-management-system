@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="flex justify-center items-center  bg-gray-100">
+    <div class="bg-white p-8 rounded shadow-md w-3/4" >
+        <h1 class="text-2xl mb-4">Update Stock</h1>
+        <h1 class="text-xl mb-4">{{book.id}} : {{book.title}}</h1>
+        <form method="POST" action="{{ url_for('stock_update',id=book.id) }}">
+            <label for="stock" class="block mb-2">Stock:</label>
+            <input type="text" name="qty" class="w-full border rounded p-2 mb-2" value={{stock.total_quantity}} required><br>
+            <button type="submit" class="bg-blue-500 text-white rounded p-2">Update</button>
+        </form>
+    </div>
+</div>
+{% endblock%}

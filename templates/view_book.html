@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mx-auto mt-10">
+    <h1 class="text-3xl font-semibold mb-4">View Book Details</h1>
+    <div class="bg-white p-6 rounded shadow">
+        <h2 class="text-xl font-semibold mb-2">{{ book.title }}</h2>
+        <p class="text-gray-600">{{ book.author }}</p>
+        <p class="text-gray-600">{{ book.isbn }}</p>
+        <p class="text-gray-600">{{ book.publisher }}</p>
+        <p class="text-gray-600">Page Count: {{ book.page }}</p>
+    </div>
+    <div class="bg-white mt-4 p-6 rounded shadow">
+        <h2 class="text-xl font-semibold mb-2">Stock Details</h2>
+        <p class="text-gray-600">Total Quantity: {{ stock.total_quantity }}</p>
+        <p class="text-gray-600">Available Quantity: {{ stock.available_quantity  or "Out of Stock"}}</p>
+        <p class="text-gray-600">Borrowed Quantity: {{ stock.borrowed_quantity }}</p>
+        <p class="text-gray-600">Total Borrowed: {{ stock.total_borrowed }}</p>
+    </div>
+    <div class="bg-white mt-4 p-6 rounded shadow">
+        <h2 class="text-xl font-semibold mb-2">Transactions</h2>
+        {% if trans%}
+            <table class="table-auto w-full">
+                <thead>
+                    <tr>
+                        <th class="border px-4 py-2">Member id</th>
+                        <th class="border px-4 py-2">Issue Date</th>
+                        <th class="border px-4 py-2">Return Date</th>
+                        <th class="border px-4 py-2">Rent Fee</th>
+                        <th class="border px-4 py-2">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for trans in trans %}
+                        <tr>
+                            <td class="py-2 px-4 border border-gray-200"><a href="/view_member/{{trans.member_id}}"  class ="text-blue-500" title="Show More details">{{ trans.member_id }}</a></td>
+                            <td class="border px-4 py-2">{{ trans.issue_date.date() }}</td>
+                            <td class="border px-4 py-2">{{ trans.return_date or 'Not returned yet' }}</td>
+                            <td class="border px-4 py-2">{{ trans.rent_fee }}</td>
+                            <td class="py-2 px-4 border border-gray-200"> <a class="ml-2 px-4 py-1 bg-green-500 text-white rounded hover:bg-green-600" href ="/returnbook/{{trans.id}}">Manage</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="text-gray-600">No transactions found for this book.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="flex justify-center items-center bg-gray-100">
+    <div class="bg-white p-8 rounded shadow-md w-3/4">
+        <h1 class="text-2xl mb-4">Add Member</h1>
+        <form method="POST" action="{{ url_for('add_member') }}" onsubmit="return validateForm()">
+            <label for="name" class="block mb-2">Name:</label>
+            <input type="text" name="name" id="name" class="w-full border rounded p-2 mb-2">
+            <span id="name-error" class="text-red-500"></span><br>
+
+            <label for="email" class="block mb-2">Email:</label>
+            <input type="text" name="email" id="email" class="w-full border rounded p-2 mb-2">
+            <span id="email-error" class="text-red-500"></span><br>
+
+            <label for="phone" class="block mb-2">Phone:</label>
+            <input type="text" name="phone" id="phone" class="w-full border rounded p-2 mb-2">
+            <span id="phone-error" class="text-red-500"></span><br>
+
+            <label for="address" class="block mb-2">Address:</label>
+            <textarea name="address" id="address" class="w-full border rounded p-2 mb-2"></textarea>
+            <span id="address-error" class="text-red-500"></span><br>
+
+            <button type="submit" class="bg-blue-500 text-white rounded p-2">ADD</button>
+        </form>
+    </div>
+</div>
+<script>
+    function isValidEmail(email) {
+        var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        return emailPattern.test(email);
+    }
+    
+    function isValidPhone(phone) {
+        var phonePattern = /^\d{10}$/; 
+        return phonePattern.test(phone);
+    }
+    
+    function clearValidationMessages() {
+        document.getElementById("name-error").textContent = "";
+        document.getElementById("email-error").textContent = "";
+        document.getElementById("phone-error").textContent = "";
+        document.getElementById("address-error").textContent = "";
+    }
+    
+    function validateForm() {
+        clearValidationMessages();
+    
+        var name = document.getElementById("name").value;
+        var email = document.getElementById("email").value;
+        var phone = document.getElementById("phone").value;
+        var address = document.getElementById("address").value;
+    
+        var isValid = true;
+    
+        if (name.trim() === "") {
+            document.getElementById("name-error").textContent = "Name is required.";
+            isValid = false;
+        }
+    
+        if (email.trim() === "") {
+            document.getElementById("email-error").textContent = "Email is required.";
+            isValid = false;
+        } else if (!isValidEmail(email)) {
+            document.getElementById("email-error").textContent = "Please enter a valid email address.";
+            isValid = false;
+        }
+    
+        if (phone.trim() !== "" && !isValidPhone(phone)) {
+            document.getElementById("phone-error").textContent = "Please enter a valid phone number.";
+            isValid = false;
+        }
+    
+        if (address.trim() === "") {
+            document.getElementById("address-error").textContent = "Address is required.";
+            isValid = false;
+        }
+    
+        return isValid;
+    }
+    </script>
+    
+{% endblock%}

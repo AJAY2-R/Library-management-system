@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="grid grid-cols-4 gap-6 xl:grid-cols-1">
+    <div class="report-card">
+        <div class="card">
+            <div class="card-body flex flex-col">
+                <!-- top -->
+                <div class="flex flex-row justify-between items-center">
+                    <div class="h6 text-red-700 fad fa-book"></div>
+                </div>
+                <!-- end top -->
+                <!-- bottom -->
+                <div class="mt-8">
+                    <h1 class="h5 num-4">{{ borrowed_books }}</h1>
+                    <p>Borrowed Books</p>
+                </div>
+                <!-- end bottom -->
+            </div>
+        </div>
+        <div class="footer bg-white p-1 mx-4 border border-t-0 rounded rounded-t-none"></div>
+    </div>
+
+
+    <div class="report-card">
+        <div class="card">
+            <div class="card-body flex flex-col">
+                <!-- top -->
+                <div class="flex flex-row justify-between items-center">
+                    <div class="h6 text-yellow-600 fad fa-book"></div>
+                </div>
+                <!-- end top -->
+                <!-- bottom -->
+                <div class="mt-8">
+                    <h1 class="h5 num-4">{{ total_books }}</h1>
+                    <p>Total Books</p>
+                </div>
+                <!-- end bottom -->
+            </div>
+        </div>
+        <div class="footer bg-white p-1 mx-4 border border-t-0 rounded rounded-t-none"></div>
+    </div>
+    <div class="report-card">
+      <div class="card">
+          <div class="card-body flex flex-col">
+              <!-- top -->
+              <div class="flex flex-row justify-between items-center">
+                  <div class="h6 text-yellow-600 fad fa-money-bill-wave"></div>
+              </div>
+              <!-- end top -->
+              <!-- bottom -->
+              <div class="mt-8">
+                  <h1 class="h5 num-4">{{ total_rent_current_month }}  ₹</h1>
+                  <p>Total Earnings (Current Month)</p>
+              </div>
+              <!-- end bottom -->
+          </div>
+      </div>
+      <div class="footer bg-white p-1 mx-4 border border-t-0 rounded rounded-t-none"></div>
+  </div>
+    <div class="report-card">
+        <div class="card">
+            <div class="card-body flex flex-col">
+                <!-- top -->
+                <div class="flex flex-row justify-between items-center">
+                    <div class="h6 text-green-700 fad fa-users"></div>
+                </div>
+                <!-- end top -->
+                <!-- bottom -->
+                <div class="mt-8">
+                    <h1 class="h5 num-4">{{ total_members }}</h1>
+                    <p>Members</p>
+                </div>
+                <!-- end bottom -->
+            </div>
+        </div>
+        <div class="footer bg-white p-1 mx-4 border border-t-0 rounded rounded-t-none"></div>
+    </div>
+</div>
+
+<div class="card col-span-2 xl:col-span-1">
+    <div class="card-header">Recent reports</div>
+    <table class="table-auto w-full text-left">
+        <thead>
+            <tr>
+                <th class="px-4 py-2 border-r">Id</th>
+                <th class="px-4 py-2 border-r">Book</th>
+                <th class="px-4 py-2 border-r">Rent fee </th>
+                <th class="px-4 py-2">Date</th>
+            </tr>
+        </thead>
+        <tbody class="text-gray-600">
+            {% for transaction,book in recent_transactions %}
+            <tr>
+                <td class="border border-l-0 px-4 py-2 "></i>{{transaction.id}}</td>
+                <td class="border border-l-0 px-4 py-2">{{ book.title }}</td>
+                <td class="border border-l-0 px-4 py-2"> ₹{{ transaction.rent_fee }}</td>
+                <td class="border border-l-0 border-r-0 px-4 py-2">{{ transaction.issue_date }} minutes ago</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}
